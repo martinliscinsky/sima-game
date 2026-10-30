@@ -5,17 +5,17 @@
 <style>
   /* Layout: jedna centrovaná kartička so zámkom, nad ňou zadanie, pod ňou výsledok */
   :root {
-    --bg: #eef1f4;
-    --page-fg: #16202b;
-    --page-muted: #5d6b7a;
-    --page-line: #cfd7df;
-    --page-accent: #b5832a;
+    --bg: #b7a2de;
+    --page-fg: #2a1850;
+    --page-muted: #4b3a78;
+    --page-line: #ffffff;
+    --page-accent: #4a2a9a;
     --surface: #ffffff;
-    --fg: #16202b;
-    --muted: #5d6b7a;
-    --line: #cfd7df;
-    --well: #eef1f4;
-    --accent: #b5832a;
+    --fg: #2a1850;
+    --muted: #5d4d86;
+    --line: #d9cff0;
+    --well: #f3effb;
+    --accent: #6a46c4;
     --accent-fg: #ffffff;
     --good: #1f7a4d;
     --good-bg: #e2f3ea;
@@ -26,17 +26,17 @@
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0f1620;
-      --page-fg: #e8edf2;
-      --page-muted: #93a1b0;
-      --page-line: #2c3a4a;
-      --page-accent: #e0aa4f;
-      --surface: #182230;
-      --fg: #e8edf2;
-      --muted: #93a1b0;
-      --line: #2c3a4a;
-      --well: #0f1620;
-      --accent: #e0aa4f;
+      --bg: #2a1a4d;
+      --page-fg: #f4efff;
+      --page-muted: #c1b0ea;
+      --page-line: rgba(255, 255, 255, 0.4);
+      --page-accent: #d7ea4f;
+      --surface: #3a2866;
+      --fg: #f4efff;
+      --muted: #c1b0ea;
+      --line: #5b4796;
+      --well: #241540;
+      --accent: #d7ea4f;
       --accent-fg: #1a1305;
       --good: #6fd09b;
       --good-bg: #153326;
@@ -46,17 +46,17 @@
     }
   }
   :root[data-theme="dark"] {
-    --bg: #0f1620;
-    --page-fg: #e8edf2;
-    --page-muted: #93a1b0;
-    --page-line: #2c3a4a;
-    --page-accent: #e0aa4f;
-    --surface: #182230;
-    --fg: #e8edf2;
-    --muted: #93a1b0;
-    --line: #2c3a4a;
-    --well: #0f1620;
-    --accent: #e0aa4f;
+    --bg: #2a1a4d;
+    --page-fg: #f4efff;
+    --page-muted: #c1b0ea;
+    --page-line: rgba(255, 255, 255, 0.4);
+    --page-accent: #d7ea4f;
+    --surface: #3a2866;
+    --fg: #f4efff;
+    --muted: #c1b0ea;
+    --line: #5b4796;
+    --well: #241540;
+    --accent: #d7ea4f;
     --accent-fg: #1a1305;
     --good: #6fd09b;
     --good-bg: #153326;
@@ -129,7 +129,7 @@
 
   .lock {
     background: var(--surface);
-    border: 1px solid var(--line);
+    border: 2px solid var(--page-line);
     border-radius: 14px;
     padding: 24px 20px;
     display: flex;
