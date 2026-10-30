@@ -1,0 +1,280 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Trojmiestny kód</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  /* Layout: jedna centrovaná kartička so zámkom, nad ňou zadanie, pod ňou výsledok */
+  :root {
+    --bg: #eef1f4;
+    --page-fg: #16202b;
+    --page-muted: #5d6b7a;
+    --page-line: #cfd7df;
+    --page-accent: #b5832a;
+    --surface: #ffffff;
+    --fg: #16202b;
+    --muted: #5d6b7a;
+    --line: #cfd7df;
+    --well: #eef1f4;
+    --accent: #b5832a;
+    --accent-fg: #ffffff;
+    --good: #1f7a4d;
+    --good-bg: #e2f3ea;
+    --bad: #b3372f;
+    --bad-bg: #fbe7e4;
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1620;
+      --page-fg: #e8edf2;
+      --page-muted: #93a1b0;
+      --page-line: #2c3a4a;
+      --page-accent: #e0aa4f;
+      --surface: #182230;
+      --fg: #e8edf2;
+      --muted: #93a1b0;
+      --line: #2c3a4a;
+      --well: #0f1620;
+      --accent: #e0aa4f;
+      --accent-fg: #1a1305;
+      --good: #6fd09b;
+      --good-bg: #153326;
+      --bad: #ff8d84;
+      --bad-bg: #3a1c1a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1620;
+    --page-fg: #e8edf2;
+    --page-muted: #93a1b0;
+    --page-line: #2c3a4a;
+    --page-accent: #e0aa4f;
+    --surface: #182230;
+    --fg: #e8edf2;
+    --muted: #93a1b0;
+    --line: #2c3a4a;
+    --well: #0f1620;
+    --accent: #e0aa4f;
+    --accent-fg: #1a1305;
+    --good: #6fd09b;
+    --good-bg: #153326;
+    --bad: #ff8d84;
+    --bad-bg: #3a1c1a;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-display);
+    font-size: 16px;
+    line-height: 1.5;
+    padding-block: 32px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    min-height: 100%;
+  }
+  main {
+    max-width: 440px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  h1 {
+    margin: 0;
+    font-size: clamp(1.9rem, 7vw, 2.4rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+    color: var(--page-fg);
+  }
+  .eyebrow {
+    margin: 0 0 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--page-accent);
+  }
+  .clues {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--page-line);
+    color: var(--page-fg);
+  }
+  .clues li {
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--page-line);
+    min-width: 0;
+  }
+  .clues .slot {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--page-muted);
+    width: 2ch;
+    flex: none;
+  }
+  .clues .what { font-weight: 500; overflow-wrap: anywhere; }
+
+  .lock {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .lock label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+  }
+  .dials { display: flex; gap: 12px; }
+  .dials input {
+    width: 3.6rem;
+    height: 4.6rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--fg);
+    background: var(--well);
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 0;
+    caret-color: var(--accent);
+  }
+  .dials input:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-color: var(--accent);
+  }
+  .dials input.ok { border-color: var(--good); background: var(--good-bg); color: var(--good); }
+  .dials input.no { border-color: var(--bad); background: var(--bad-bg); color: var(--bad); }
+
+  .result {
+    margin: 0;
+    width: 100%;
+    min-height: 3.4rem;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-weight: 500;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: var(--muted);
+  }
+  .result.ok { background: var(--good-bg); color: var(--good); font-weight: 700; }
+  .result.no { background: var(--bad-bg); color: var(--bad); }
+</style>
+
+<main>
+  <header>
+    <p class="eyebrow">Hlavolam</p>
+    <h1>Uhádni trojmiestny kód</h1>
+  </header>
+
+  <ol class="clues" aria-label="Zadanie">
+    <li><span class="slot">1.</span><span class="what">Kniha 3</span></li>
+    <li><span class="slot">2.</span><span class="what">Krajina 4</span></li>
+    <li><span class="slot">3.</span><span class="what">#Meno</span></li>
+  </ol>
+
+  <form class="lock" id="form" autocomplete="off">
+    <label for="d1">Tvoj kód</label>
+    <div class="dials" id="dials">
+      <input id="d1" inputmode="text" maxlength="1" aria-label="Prvý znak kódu" autocapitalize="characters" spellcheck="false">
+      <input id="d2" inputmode="text" maxlength="1" aria-label="Druhý znak kódu" autocapitalize="characters" spellcheck="false">
+      <input id="d3" inputmode="text" maxlength="1" aria-label="Tretí znak kódu" autocapitalize="characters" spellcheck="false">
+    </div>
+    <p class="result" id="result" role="status" aria-live="polite">Píš znak po znaku, farba ti napovie.</p>
+  </form>
+</main>
+
+<script>
+  // Správne znaky sa v stránke nenachádzajú, iba SHA-256 odtlačky (pozícia + znak).
+  var HASHES = [
+    "340792a7a42feffabbddc144fe4059013ff8af265ca9c3337933e0b633569367",
+    "3625fcf8aa8c1b7f92f55952c037f15fbe9ac74950c657d1c948d3f4f21136ec",
+    "b7a56873cd771f2c446d369b649430b65a756ba278ff97ec81bb6f55b2e73569"
+  ];
+  var inputs = [document.getElementById("d1"), document.getElementById("d2"), document.getElementById("d3")];
+  var result = document.getElementById("result");
+  var HINT = "Píš znak po znaku, farba ti napovie.";
+
+  async function sha256(text) {
+    var buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+      return b.toString(16).padStart(2, "0");
+    }).join("");
+  }
+
+  async function validate() {
+    var good = 0, filled = 0;
+    for (var i = 0; i < 3; i++) {
+      var v = inputs[i].value.trim().toLowerCase();
+      inputs[i].className = "";
+      if (!v) continue;
+      filled++;
+      var ok = false;
+      try { ok = (await sha256(i + v)) === HASHES[i]; } catch (err) { ok = false; }
+      inputs[i].className = ok ? "ok" : "no";
+      if (ok) good++;
+    }
+    if (good === 3) {
+      result.className = "result ok";
+      result.textContent = "Správne! Zámok sa otvoril.";
+    } else if (filled === 3) {
+      result.className = "result no";
+      result.textContent = "Ešte nie. Oprav červené znaky.";
+    } else {
+      result.className = "result";
+      result.textContent = HINT;
+    }
+  }
+
+  inputs.forEach(function (input, idx) {
+    input.addEventListener("input", function () {
+      input.value = input.value.slice(-1);
+      validate();
+      if (input.value && idx < 2) inputs[idx + 1].focus();
+    });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Backspace" && !input.value && idx > 0) inputs[idx - 1].focus();
+      if (e.key === "ArrowLeft" && idx > 0) inputs[idx - 1].focus();
+      if (e.key === "ArrowRight" && idx < 2) inputs[idx + 1].focus();
+    });
+    input.addEventListener("focus", function () { input.select(); });
+    input.addEventListener("paste", function (e) {
+      var text = (e.clipboardData || window.clipboardData).getData("text").replace(/\s/g, "");
+      if (text.length > 1) {
+        e.preventDefault();
+        for (var k = 0; k < 3; k++) inputs[k].value = text.charAt(k) || "";
+        validate();
+      }
+    });
+  });
+
+  document.getElementById("form").addEventListener("submit", function (e) { e.preventDefault(); });
+  inputs[0].focus();
+</script>
+
+</body></html>
